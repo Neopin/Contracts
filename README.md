@@ -1,2 +1,3 @@
-# NeopinToken
-Neopin Token Contract
+# Contracts
+
+1. Neopin Token Contract
