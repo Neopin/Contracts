@@ -151,7 +151,12 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         override
         returns (bool)
     {
-        _approve(_msgSender(), spender, amount);
+        uint256 currentAllowance = _allowances[spender][_msgSender()];
+        require(
+            currentAllowance >= amount,
+            "ERC20: transfer amount exceeds allowance"
+        );
+        _approve(_msgSender(), spender, currentAllowance, amount);
         return true;
     }
 
@@ -181,7 +186,12 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
             currentAllowance >= amount,
             "ERC20: transfer amount exceeds allowance"
         );
-        _approve(sender, _msgSender(), currentAllowance - amount);
+        _approve(
+            sender,
+            _msgSender(),
+            currentAllowance,
+            currentAllowance - amount
+        );
 
         return true;
     }
@@ -203,10 +213,12 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         virtual
         returns (bool)
     {
+        uint256 currentAllowance = _allowances[_msgSender()][spender];
         _approve(
             _msgSender(),
             spender,
-            _allowances[_msgSender()][spender] + addedValue
+            currentAllowance,
+            currentAllowance + addedValue
         );
         return true;
     }
@@ -235,7 +247,12 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
             currentAllowance >= subtractedValue,
             "ERC20: decreased allowance below zero"
         );
-        _approve(_msgSender(), spender, currentAllowance - subtractedValue);
+        _approve(
+            _msgSender(),
+            spender,
+            currentAllowance,
+            currentAllowance - subtractedValue
+        );
 
         return true;
     }
@@ -332,13 +349,17 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
     function _approve(
         address owner,
         address spender,
+        uint256 currentAmount,
         uint256 amount
     ) internal virtual {
         require(owner != address(0), "ERC20: approve from the zero address");
         require(spender != address(0), "ERC20: approve to the zero address");
-        uint256 oldValue = _allowances[owner][spender];
+        require(
+            currentAmount == _allowances[owner][spender],
+            "ERC20: invalid currentAmount"
+        );
         _allowances[owner][spender] = amount;
-        emit Approval(owner, spender, oldValue, amount);
+        emit Approval(owner, spender, currentAmount, amount);
     }
 
     /**
