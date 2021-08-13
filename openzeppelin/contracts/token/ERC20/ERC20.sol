@@ -121,6 +121,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         returns (bool)
     {
         _transfer(_msgSender(), recipient, amount);
+        emit Transfer(_msgSender(), recipient, amount);
         return true;
     }
 
@@ -173,6 +174,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         uint256 amount
     ) external virtual override returns (bool) {
         _transfer(sender, recipient, amount);
+        emit Transfer(_msgSender(), sender, recipient, amount);
 
         uint256 currentAllowance = _allowances[sender][_msgSender()];
         require(
@@ -269,8 +271,6 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         );
         _balances[sender] = senderBalance - amount;
         _balances[recipient] += amount;
-
-        emit Transfer(sender, recipient, amount);
     }
 
     /** @dev Creates `amount` tokens and assigns them to `account`, increasing
@@ -336,9 +336,9 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
     ) internal virtual {
         require(owner != address(0), "ERC20: approve from the zero address");
         require(spender != address(0), "ERC20: approve to the zero address");
-
+        uint256 oldValue = _allowances[owner][spender];
         _allowances[owner][spender] = amount;
-        emit Approval(owner, spender, amount);
+        emit Approval(owner, spender, oldValue, amount);
     }
 
     /**
