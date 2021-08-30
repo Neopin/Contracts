@@ -1,0 +1,12 @@
+logs/
+output/
+.vscode/ 
+coverage.txt
+.DS_Store
+*.log
+*.out
+*.key
+*.enc
+*.sss
+UTC--*
+*/build/
