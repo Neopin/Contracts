@@ -15,18 +15,6 @@ contract NPT is ERC20 {
         _mint(msg.sender, 1000000000e18);
     }
 
-    function increaseAllowance(address _spender, uint256 _addedValue) external override returns (bool) {
-        IERC20 token = IERC20(address(this));
-        token.safeIncreaseAllowance(_spender, _addedValue);
-        return true;
-    }
-
-    function decreaseAllowance(address _spender, uint256 _subtractedValue) external override returns (bool) {
-        IERC20 token = IERC20(address(this));
-        token.safeDecreaseAllowance(_spender, _subtractedValue);
-        return true;
-    }
-
     function burn(uint256 _amount) external returns (bool) {
         require(msg.sender == owner);
         _burn(msg.sender, _amount);
