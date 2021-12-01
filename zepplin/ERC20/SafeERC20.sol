@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.7;
 
-import "../IERC20.sol";
-import "../../../utils/Address.sol";
+import "./IERC20.sol";
+import "./Address.sol";
 
 /**
  * @title SafeERC20
