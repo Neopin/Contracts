@@ -6,7 +6,7 @@ import "./zepplin/ERC20/Ownable.sol";
 import "./zepplin/ERC20/SafeERC20.sol";
 import "./NeopinToken.sol";
 
-contract TokenLock is Ownable {
+contract Lockup is Ownable {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
     
