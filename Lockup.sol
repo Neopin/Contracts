@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.7;
+pragma solidity 0.8.10;
 
 import "./zepplin/ERC20/SafeMath.sol";
 import "./zepplin/ERC20/Ownable.sol";

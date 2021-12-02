@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity 0.8.7;
+pragma solidity 0.8.10;
 
 import "./zepplin/ERC20/ERC20.sol";
 import "./zepplin/ERC20/SafeERC20.sol";
